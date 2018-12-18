@@ -1,9 +1,9 @@
 # weex-practice-plan
 经过一个月半的填坑，总结下weex变成可上线项目(app)中间的坑，水平有限，只能写js的部分，原生部分不是我弄的
 
-##版本与项目
+## 版本与项目
 
-###版本
+### 版本
 ```
 npm install weex-toolkit -g
 weex -v
@@ -13,7 +13,7 @@ weex -v
  - weex-previewer : v1.5.1
 ```
 
-###项目
+### 项目
 ```
 weex create app
 ? Project name app
@@ -38,12 +38,12 @@ weex platform add android
 3. 微信登录命名和Weex依赖包命名冲突了 WXLogLevel => 改成了WXXLogLevel
 https://github.com/apache/incubator-weex/issues/1887
 
-###Devtools
+### Devtools
 这个目前我没办法等我学了原生会试试这个
 
 ## webpack 与 vuex
 
-###webpack 分析
+### webpack 分析
 ```
 "scripts": {
     "start": "npm run serve",
@@ -88,7 +88,7 @@ webpack下的weexConfig:
 * plugins
 * node: config.nodeConfiguration (这个现在没看懂)
 
-####entry
+#### entry
 运行npm run ios
 getEntryFile()生成weexEntry
 通过getNativeEntryFileContent生成具体内容
@@ -121,14 +121,14 @@ const getEntryFile = (dir) => {
 }
 ```
 
-####output
+#### output
 
-####resolve
+#### resolve
 这可以定义快捷方式
 ```import HelloWorld from '@/components/HelloWorld'```
 @就是这里定义的
 
-####module
+#### module
 npm i url-loader file-loader -D
 ```
       {
@@ -151,7 +151,7 @@ npm i url-loader file-loader -D
 //   return imagePath
 // }
 
-####plugins
+#### plugins
 要发线上包的时候
 npm run build:prod
 在webpack.prod.conf.js使用了UglifyJsparallelPlugin 会压缩文件体积
