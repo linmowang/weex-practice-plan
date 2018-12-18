@@ -20005,9 +20005,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+
 var _HelloWorld = __webpack_require__(7);
 
 var _HelloWorld2 = _interopRequireDefault(_HelloWorld);
+
+var _vuex = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"vuex\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20016,19 +20027,14 @@ exports.default = {
   components: {
     HelloWorld: _HelloWorld2.default
   },
+  computed: _extends({}, (0, _vuex.mapState)(['count']), (0, _vuex.mapGetters)([])),
+  methods: _extends({}, (0, _vuex.mapMutations)(['increment'])),
   data: function data() {
     return {
       logo: 'https://gw.alicdn.com/tfs/TB1yopEdgoQMeJjy1XaXXcSsFXa-640-302.png'
     };
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 18 */

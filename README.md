@@ -25,6 +25,7 @@ weex create app
 ? Set up unit tests No
 ? Should we run `npm install` for you after the project has been created? (recommended) npm
 ```
+我的项目是没有vue-router的方式，所以每个页面所有东西都属于单页面
 
 weex platform add ios<br/>
 weex platform add android<br/>
@@ -90,9 +91,10 @@ webpack下的weexConfig:
 #### entry
 运行npm run ios<br/>
 getEntryFile()生成weexEntry<br/>
-通过getNativeEntryFileContent生成具体内容<br/>
-由于entryFilter: '**/*.vue',所以所有的.vue都会打包成.js(包括component)<br/>
-生成的内容 vue初始化在.temp文件夹下，所有的完整内容在dist下，原生页一个js代表一个页面(我的项目是这样做的), 所以需要把component过滤掉
+由于entryFilter: '**/*.vue',所有的.vue都会打包成.js(包括component)<br/>
+生成的内容 vue初始化在.temp文件夹下，所有的完整内容在dist下，原生页一个js代表一个页面(只是我的项目是这样做的), 所以需要把component过滤掉
+
+![](img/webpack-002.png)
 
 ```
 // Retrieve entry file mappings by function recursion
@@ -119,6 +121,7 @@ const getEntryFile = (dir) => {
   })
 }
 ```
+![](img/webpack-003.png)
 
 #### output(略过)
 
@@ -156,7 +159,7 @@ npm run build:prod
 在webpack.prod.conf.js使用了UglifyJsparallelPlugin 会压缩文件体积
 
 ### vuex
-需要看完上面的entry才能懂下面的内容
+需要看完上面的entry才能接上下面的内容
 由于getNativeEntryFileContent可以生成具体内容 
 .temp下的文件都是通过getNativeEntryFileContent写的
 所有vuex需要在这里添加
@@ -190,6 +193,19 @@ import store from '../src/store.js'
 
 new Vue(Vue.util.extend({el: '#root', store}, App));
 ```
+
+这里有个大坑：那天困扰了我一天
+我在src下index.js的
+```
+created() {
+  console.log(this, this.$store)     
+}
+```
+然后他就报错了
+具体看这个https://segmentfault.com/q/1010000017336049
+
+所以使用vuex这样引用
+import { mapState ,mapMutations,mapGetters,mapActions} from 'vuex'
 
 ## 编写页面
 ### 传参

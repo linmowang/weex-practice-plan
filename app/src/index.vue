@@ -8,10 +8,19 @@
 
 <script>
 import HelloWorld from '@/components/HelloWorld'
+import { mapState ,mapMutations,mapGetters,mapActions} from 'vuex'
+
 export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  computed: {
+    ...mapState(['count']),
+    ...mapGetters([])
+  },
+  methods: {
+    ...mapMutations(['increment']),
   },
   data () {
     return {
