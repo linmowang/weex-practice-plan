@@ -26,8 +26,8 @@ weex create app
 ? Should we run `npm install` for you after the project has been created? (recommended) npm
 ```
 
-weex platform add ios
-weex platform add android
+weex platform add ios<br/>
+weex platform add android<br/>
 生成ios和android这部分要原生来看
 
 如果ios运行不下去，有可能是因为：
@@ -35,8 +35,8 @@ weex platform add android
 ```pod  install```
 这个就跟执行npm install，下载ios需要的依赖包
 2. ios-deploy@1.9.4可以放入到package.json中
-3. 微信登录命名和Weex依赖包命名冲突了 WXLogLevel => 改成了WXXLogLevel
-https://github.com/apache/incubator-weex/issues/1887
+3. 微信登录命名和Weex依赖包命名冲突了 WXLogLevel => 改成了WXXLogLevel<br/>
+解决方案： https://github.com/apache/incubator-weex/issues/1887
 
 ### Devtools
 这个目前我没办法等我学了原生会试试这个
@@ -76,8 +76,8 @@ https://github.com/apache/incubator-weex/issues/1887
 
 ```
 
-在webpack.config.js文件中选择common 执行的是webpackConfig = require('./configs/webpack.common.conf');
-webpack.common.conf.js 要分两部分看一个是生成web的配置，一个是生成native的配置，我不需要web所以把他们可以全忽略了。
+在webpack.config.js文件中选择common 执行的是webpackConfig = require('./configs/webpack.common.conf');<br/>
+webpack.common.conf.js 要分两部分看一个是生成web的配置，一个是生成native的配置，我不需要web所以把他们可以全忽略了。<br/>
 
 webpack下的weexConfig:
 
@@ -89,10 +89,10 @@ webpack下的weexConfig:
 * node: config.nodeConfiguration (这个现在没看懂)
 
 #### entry
-运行npm run ios
-getEntryFile()生成weexEntry
-通过getNativeEntryFileContent生成具体内容
-由于entryFilter: '**/*.vue',所以所有的.vue都会打包成.js(包括component)
+运行npm run ios<br/>
+getEntryFile()生成weexEntry<br/>
+通过getNativeEntryFileContent生成具体内容<br/>
+由于entryFilter: '**/*.vue',所以所有的.vue都会打包成.js(包括component)<br/>
 生成的内容 vue初始化在.temp文件夹下，所有的完整内容在dist下，原生页一个js代表一个页面(我的项目是这样做的), 所以需要把component过滤掉
 
 ```
@@ -142,11 +142,11 @@ npm i url-loader file-loader -D
         }]
       }
 ```
-这可能把小图片打包成base64
-但是在vue文件中引用require('图片路径')会报错
-在mixins这样使用 会导致 images2 所有小图片都打到js文件里面，并不能达到理想中的效果，可以先放放
+这可能把小图片打包成base64<br/>
+但是在vue文件中引用require('图片路径')会报错<br/>
+在mixins这样使用 会导致images2所有小图片都打到js文件里面，并不能达到理想中的效果，可以先放放<br/>
 // loadImage(imgPath) {
-//   const imagePath = require(`../images2/index/${imgPath}`) // eslint-disable-line
+//   const imagePath = require(`../images2/${imgPath}`) // eslint-disable-line
 //   console.log('imagePath: ', imagePath)
 //   return imagePath
 // }
@@ -158,7 +158,40 @@ npm run build:prod
 
 ### vuex
 需要看完上面的entry才能懂下面的内容
-由于 getNativeEntryFileContent可以生成具体内容
+由于getNativeEntryFileContent可以生成具体内容 
+.temp下的文件都是通过getNativeEntryFileContent写的
+所有vuex需要在这里添加
+
+npm i vuex
+```
+// Wraping the entry file for native.
+const getNativeEntryFileContent = (entryPath, vueFilePath) => {
+  let relativeVuePath = path.relative(path.join(entryPath, '../'), vueFilePath);
+  let contents = '';
+  if (isWin) {
+    relativeVuePath = relativeVuePath.replace(/\\/g, '\\\\');
+  }
+
+  const relativeStorePath = path.join(relativeVuePath, '../store.js')
+  console.log(relativeStorePath)
+  contents += `import App from '${relativeVuePath}'
+import store from '${relativeStorePath}'
+
+new Vue(Vue.util.extend({el: '#root', store}, App));
+`;
+  
+  return contents;
+}
+```
+
+.temp index.js
+```
+import App from '../src/index.vue'
+import store from '../src/store.js'
+
+new Vue(Vue.util.extend({el: '#root', store}, App));
+```
+
 
 ## 编写页面
 ### 传参
