@@ -1,5 +1,5 @@
 # weex-practice-plan
-经过一个月半的填坑，总结下weex变成可上线项目(app)中间的坑，水平有限，只能写js的部分，原生部分不是我弄的
+经过一个月半的填坑，总结下weex变成可上线项目(app)中间的坑，水平有限，只能写写简单的js部分，原生部分不是我弄的。
 
 ## 版本与项目
 
@@ -38,8 +38,7 @@ weex platform add android<br/>
 3. 微信登录命名和Weex依赖包命名冲突了 WXLogLevel => 改成了WXXLogLevel<br/>
 解决方案： https://github.com/apache/incubator-weex/issues/1887
 
-### Devtools
-这个目前我没办法等我学了原生会试试这个
+### Devtools(这个目前我没办法等我学了原生会试试这个)
 
 ## webpack 与 vuex
 
@@ -121,7 +120,7 @@ const getEntryFile = (dir) => {
 }
 ```
 
-#### output
+#### output(略过)
 
 #### resolve
 这可以定义快捷方式
@@ -191,7 +190,6 @@ import store from '../src/store.js'
 
 new Vue(Vue.util.extend({el: '#root', store}, App));
 ```
-
 
 ## 编写页面
 ### 传参
