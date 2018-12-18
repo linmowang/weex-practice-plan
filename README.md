@@ -27,7 +27,7 @@ weex platform add android
 
 ## webpack 与 vuex
 ###webpack 分析
-...javascript
+```
 "scripts": {
     "start": "npm run serve",
     "build": "webpack --env.NODE_ENV=common",
@@ -46,7 +46,7 @@ weex platform add android
     "pack:android": "npm run clean:android && weex build android",
     "pack:web": "npm run clean:web && npm run build:prod:web"
   },
-...
+```
 
 
 
